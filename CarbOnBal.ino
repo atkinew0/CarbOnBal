@@ -21,7 +21,9 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with CarbOnBal.  If not, see <http://www.gnu.org/licenses/>.
-
+#include <Wire.h>
+#include <hd44780.h>
+#include <hd44780ioClass/hd44780_I2Cexp.h>
 #include "Arduino.h"
 #include "EEPROM.h"
 
@@ -74,12 +76,13 @@ void setup() {
 	setInputActiveLow(RIGHT);                //short out the pins if setup wrong
 	setInputActiveLow(CANCEL);
 
-	analogWrite(brightnessPin, settings.brightness);  //brightness is PWM driven
-	analogWrite(contrastPin, settings.contrast); //contrast is PWM with smoothing (R/C network) to prevent flicker
-
 	ambientPressure = detectAmbient(); //set ambient pressure (important because it varies with weather and altitude)
 
-	//set timer1 interrupt at 1Hz
+	//set timer1 interrupt at 1000Hz
+  	//the computation for the interrunpt timing is as follows:
+  	//AtMega328p running at 16Mhz native frequency
+  	//Use a 64 prescaler value to arrive at a timer frequency of 16,000,000/64 = 250,000
+  	//Set timer (OCR1A setting) to count up to 249, then reset to 0, so 250,000/249 = 1004, approx 1K hz
 	TCCR1A = 0; // set entire TCCR1A register to 0
 	TCCR1B = 0; // same for TCCR1B
 	TCNT1 = 0; //initialize counter value to 0

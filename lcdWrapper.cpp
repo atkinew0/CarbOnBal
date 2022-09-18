@@ -22,7 +22,9 @@
 // You should have received a copy of the GNU General Public License
 // along with CarbOnBal.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <LiquidCrystal.h>
+#include <Wire.h>
+#include <hd44780.h>
+#include <hd44780ioClass/hd44780_I2Cexp.h>
 
 #include "lcdWrapper.h"
 
@@ -31,7 +33,7 @@
 #include "globals.h"
 
 //  Order of parameters: RS, E, D4, D5, D6, D7
-LiquidCrystal lcd(13,12,10,9,8,7);
+hd44780_I2Cexp lcd;
 
 void lcd_setCursor(int a, int i){
 	lcd.setCursor(a, i);
