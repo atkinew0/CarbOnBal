@@ -69,6 +69,7 @@ void setup() {
 	lcd_begin(DISPLAY_COLS, DISPLAY_ROWS);
 
 	settings = loadSettings(settings); //load saved settings into memory from FLASH
+	settings.advanced = true;
 	Serial.begin(BAUD_RATE);
 
 	setInputActiveLow(SELECT);          //set the pins connected to the switches

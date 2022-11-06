@@ -32,7 +32,6 @@
 #include "utils.h"
 #include "globals.h"
 
-//  Order of parameters: RS, E, D4, D5, D6, D7
 hd44780_I2Cexp lcd;
 
 void lcd_setCursor(int a, int i){
